@@ -1,0 +1,32 @@
+name: Pipeline CI - HTML e CSS
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar codigo
+        uses: actions/checkout@v4
+
+      - name: Verificar HTML
+        run: test -f index.html
+
+      - name: Verificar CSS
+        run: test -f style.Css
+
+      - name: Gerar relatorio
+        run: |
+          mkdir -p relatorio
+          echo "Pipeline executado com sucesso!" > relatorio/resultado.txt
+
+      - name: Publicar artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorio-devops
+          path: relatorio/
